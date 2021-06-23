@@ -3,6 +3,7 @@
     <h1>Github Search</h1>
     <Pesquisa class="pesquisa" @mandarNome="user = $event"/>
     <component :is="respostaDaPesquisa" v-bind="propsAtuais"/>
+    <component :is="verificarRepositorio" :dataRepo="dataRepo"/>
   </div>
 </template>
 
@@ -10,7 +11,7 @@
 import Pesquisa from './components/pesquisa.vue'
 import Perfil from './components/perfil.vue'
 import semPerfil from './components/semPerfil.vue'
-import repositorios from './components/repositorios.vue'
+import Repositorios from './components/repositorios.vue'
 
 export default {
   name: 'App',
@@ -18,7 +19,7 @@ export default {
     Pesquisa,
     Perfil,
     semPerfil,
-    repositorios
+    Repositorios
   },
   data() {
     return {
@@ -26,6 +27,7 @@ export default {
       user: undefined,
       dataGit: '',
       respostaDaPesquisa: '',
+      dataRepo: {}
     }
   },
   computed: {
@@ -34,6 +36,9 @@ export default {
       return this.respostaDaPesquisa === 'Perfil'
         ? { dataGit: this.dataGit }
         : {}
+    },
+    verificarRepositorio() {
+      return this.respostaDaPesquisa === 'Perfil'? 'Repositorios' : ''
     }
   },
   methods: {
@@ -41,7 +46,7 @@ export default {
     pegarRepositorio() {
       fetch(`${this.url}/${this.user}/repos`)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => this.dataRepo = data)
     }
   },
   watch: {

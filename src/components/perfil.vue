@@ -7,7 +7,6 @@
         <p>{{ localizacao }}</p>
         <p>{{ seguidores }}</p>
         <p>{{ repos }}</p>
-        {{dataGit}}
     </aside>
 </template>
 
