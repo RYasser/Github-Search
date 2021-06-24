@@ -1,7 +1,7 @@
 <template>
     <nav>
-        <input placeholder="Usuário GitHub" class="pesquisa" v-model="user">
-        <button id="btnPesquisar" class="btnPesquisar" @click="pegarNome">Pesquisar</button>
+        <input placeholder="Usuário" class="pesquisa" v-model="user">
+        <img src="../assets/lupa.png" class="btnPesquisar" @click="pegarNome">
     </nav>
 </template>
 
@@ -22,21 +22,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     nav {
         display: grid;
         grid-template-areas: "inputPesquisa btnPesquisa";
         grid-template-columns: 550px 80px;
+        grid-template-rows: 100%;
     }
 
     .pesquisa {
         grid-area: inputPesquisa;
-        height: 20px;
+        height: 25px;
     }
 
     .btnPesquisar {
         grid-area: btnPesquisa;
-
+        background-color: black;
+        width: 30px;
     }
 
 </style>

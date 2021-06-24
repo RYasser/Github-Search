@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <h1>Github Search</h1>
-    <Pesquisa class="pesquisa" @mandarNome="user = $event"/>
-    <component :is="respostaDaPesquisa" v-bind="propsAtuais"/>
-    <component :is="verificarRepositorio" :dataRepo="dataRepo"/>
+    <div class="titulo">
+      <img src="./assets/logo.png" class="imgLogo">
+    </div>
+    <Pesquisa class="pesquisar" @mandarNome="user = $event"/>
+    <component class="perfil" :is="respostaDaPesquisa" v-bind="propsAtuais"/>
+    <component class="repos" :is="verificarRepositorio" :dataRepo="dataRepo"/>
   </div>
 </template>
 
@@ -71,7 +73,41 @@ export default {
 </script>
 
 <style>
-  .pesquisa {
-    margin-left: 38%;
+  html, body {
+    width: 100%;
+    height: 100%;
+  }
+
+  .imgLogo {
+    width: 200px;
+  }
+
+  #app {
+    margin-left: 10%;
+    margin-top: 5%;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 20% 1fr;
+    grid-template-columns: 25% 1fr;
+    grid-template-areas: 
+    "titulo pesquisa" 
+    "perfil repos";
+  }
+
+  .pesquisar {
+    grid-area: pesquisa;    
+  }
+
+  .perfil {
+    grid-area: perfil;
+  }
+
+  .repos {
+    grid-area: repos;
+  }
+
+  .titulo {
+    grid-area: titulo;
   }
 </style>

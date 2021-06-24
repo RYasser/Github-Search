@@ -1,12 +1,13 @@
 <template>
     <aside>
-        <img :src="urlImage">
+        <img :src="urlImage" class="imgPerfil">
 
         <h2>{{ nome }}</h2>
         <p>{{ user }}</p>
         <p>{{ localizacao }}</p>
         <p>{{ seguidores }}</p>
         <p>{{ repos }}</p>
+        <p>{{ org }}</p>
     </aside>
 </template>
 
@@ -28,7 +29,9 @@ export default {
             // Número de seguidores
             seguidores: this.dataGit.followers,
             // Número de repositórios
-            repos: this.dataGit.public_repos
+            repos: this.dataGit.public_repos,
+            // Organização
+            org: this.dataGit.company
         }
     },
     watch: {
@@ -40,11 +43,14 @@ export default {
             this.localizacao = this.dataGit.location
             this.seguidores = this.dataGit.followers
             this.repos = this.dataGit.public_repos
+            this.org = this.dataGit.company
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+    .imgPerfil {
+        width: 170px;
+    }
 </style>
