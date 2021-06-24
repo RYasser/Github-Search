@@ -29,6 +29,7 @@ export default {
         grid-template-columns: 350px 80px;
         grid-template-rows: 100%;
         margin-left: 15%;
+        width: 60px;
     }
 
     .pesquisa {
@@ -42,6 +43,13 @@ export default {
         grid-area: btnPesquisa;
         background-color: black;
         width: 30px;
+    }
+
+    @media(max-width: 768px) {
+        nav {
+            grid-template-columns: 290px 80px;
+
+        }
     }
 
 </style>

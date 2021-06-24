@@ -118,4 +118,21 @@ export default {
   h2 {
     color: #000000;
   }
+
+  @media(max-width: 768px) {
+    .pesquisar { 
+      margin-bottom: 25px; 
+      margin-left: 2%;
+    }
+
+    #app {
+    grid-template-rows: 20% 1fr 1fr 1fr;
+    grid-template-columns: 100%;
+    grid-template-areas: 
+    "titulo" 
+    "pesquisa"
+    "perfil"
+    "repos";
+  }
+}
 </style>
