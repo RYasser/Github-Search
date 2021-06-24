@@ -73,7 +73,11 @@ export default {
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
   html, body {
+    font-family: Rubik;
+    color: #757575;
     width: 100%;
     height: 100%;
   }
@@ -109,5 +113,9 @@ export default {
 
   .titulo {
     grid-area: titulo;
+  }
+
+  h2 {
+    color: #000000;
   }
 </style>

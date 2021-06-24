@@ -26,8 +26,9 @@ export default {
     nav {
         display: grid;
         grid-template-areas: "inputPesquisa btnPesquisa";
-        grid-template-columns: 550px 80px;
+        grid-template-columns: 350px 80px;
         grid-template-rows: 100%;
+        margin-left: 15%;
     }
 
     .pesquisa {
@@ -36,6 +37,8 @@ export default {
     }
 
     .btnPesquisar {
+        padding: 0px;
+        margin: 0px;
         grid-area: btnPesquisa;
         background-color: black;
         width: 30px;

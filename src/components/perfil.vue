@@ -1,13 +1,27 @@
 <template>
     <aside>
         <img :src="urlImage" class="imgPerfil">
+        <h2 class="nome">{{ nome }}</h2>
+        <span class="user">{{ user }}</span>
 
-        <h2>{{ nome }}</h2>
-        <p>{{ user }}</p>
-        <p>{{ localizacao }}</p>
-        <p>{{ seguidores }}</p>
-        <p>{{ repos }}</p>
-        <p>{{ org }}</p>
+        <div class="dados">
+            <span v-if="localizacao != null" class="localizacao">
+                <img src="../assets/location.png">
+                {{ localizacao }}
+            </span>
+            <span v-if="repos != null">
+                <img src="../assets/repository.png">
+                {{ repos }}
+            </span>
+            <span v-if="org != null">
+                <img src="../assets/org.png">
+                {{ org }}
+            </span>
+            <span v-if="seguidores != null">
+                <img src="../assets/followers.png">
+                {{ seguidores }}
+            </span>
+        </div>    
     </aside>
 </template>
 
@@ -52,5 +66,19 @@ export default {
 <style scoped>
     .imgPerfil {
         width: 170px;
+    }
+
+    .nome {
+        margin-top: 3px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .dados {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
     }
 </style>
