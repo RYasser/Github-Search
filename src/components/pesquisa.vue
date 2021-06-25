@@ -19,6 +19,7 @@ export default {
         // Evento que será chamado quando clicar e enviar para o componente App
         pegarNome(e) {
             this.$emit('mandarNome', this.user)
+            this.user = ''
         }
     }
 }

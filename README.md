@@ -1,4 +1,7 @@
 # github_search
+Consulte um usuário que faz parte do Github através da barra de pesquisa;
+Caso o usuários em que está procurando realmente exista, terá informações referente ao usuário
+e seus repositórios no GitHub.
 
 ## Project setup
 ```

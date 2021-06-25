@@ -49,6 +49,7 @@ export default {
     pegarRepositorio() {
       fetch(`${this.url}/${this.user}/repos`)
       .then(res => res.json())
+      // Manda pro armazenamento de repositórios do usuário atual com a lógica de decrementação
       .then(data => this.dataRepo = decrescente(data))
     }
   },

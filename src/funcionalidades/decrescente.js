@@ -29,12 +29,12 @@ function decrescente(repositorios) {
                 decrescente.forEach((dec, i) => {
                     let verificaListaId = idDecrescentes.indexOf(repo.id) === -1
 
-                    // Se a quantidade de estrelas do atual for maior ou igual o atual lista, adiciona na frente e o id não está na lista
+                    // Se a quantidade de estrelas do atual for maior ou igual o atual da lista, e o id não está na lista adiciona na frente
                     if ((repo.stargazers_count >= dec.stargazers_count) && (verificaListaId)) {
                         decrescente.splice(i+1, 0, repo)
                         idDecrescentes.push(repo.id)
                     
-                    // Se a quantidade de estrelas do atual for menor ou igual o atual lista, adiciona atrás e o id não está na lista
+                    // Se a quantidade de estrelas do atual for menor ou igual o atual da lista, e o id não está na lista adiciona atrás
                     } else if ((repo.stargazers_count <= dec.stargazers_count) && (verificaListaId)) {
                         decrescente.splice(i-1, 0, repo)
                         idDecrescentes.push(repo.id)
