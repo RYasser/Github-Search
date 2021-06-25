@@ -9,14 +9,17 @@
                 <img src="../assets/location.png">
                 {{ localizacao }}
             </span>
+            
             <span v-if="repos != null">
                 <img src="../assets/repository.png">
                 {{ repos }}
             </span>
+
             <span v-if="org != null">
                 <img src="../assets/org.png">
                 {{ org }}
             </span>
+            
             <span v-if="seguidores != null">
                 <img src="../assets/followers.png">
                 {{ seguidores }}
@@ -34,16 +37,22 @@ export default {
         return {
             // Nome real do usuário
             nome: this.dataGit.name,
+
             // Imagem do perfil
             urlImage: this.dataGit.avatar_url,
+
             // Nome de usuário Github
             user: this.dataGit.login,
+
             // Localização
             localizacao: this.dataGit.location,
+
             // Número de seguidores
             seguidores: this.dataGit.followers,
+
             // Número de repositórios
             repos: this.dataGit.public_repos,
+
             // Organização
             org: this.dataGit.company
         }

@@ -14,6 +14,7 @@ import Pesquisa from './components/pesquisa.vue'
 import Perfil from './components/perfil.vue'
 import semPerfil from './components/semPerfil.vue'
 import Repositorios from './components/repositorios.vue'
+import { decrescente } from './funcionalidades/decrescente.js'
 
 export default {
   name: 'App',
@@ -48,7 +49,7 @@ export default {
     pegarRepositorio() {
       fetch(`${this.url}/${this.user}/repos`)
       .then(res => res.json())
-      .then(data => this.dataRepo = data)
+      .then(data => this.dataRepo = decrescente(data))
     }
   },
   watch: {
@@ -63,7 +64,7 @@ export default {
           data.message === 'Not Found' ? 
             this.respostaDaPesquisa = 'semPerfil' : this.respostaDaPesquisa = 'Perfil'
         })
-        // Realiza a requisição dos repositórios do usuário atual
+        // Realiza a requisição dos repositórios do usuário encontrado
         .then(data => this.pegarRepositorio())
         // Em caso de erro, executa o componente usado em caso o perfil não é encontrado
         .catch(error => this.respostaDaPesquisa = 'semPerfil')
@@ -78,7 +79,7 @@ export default {
   html, body {
     font-family: Rubik;
     color: #757575;
-    width: 100%;
+    width: 1141px;
     height: 100%;
   }
 
@@ -122,7 +123,7 @@ export default {
   @media(max-width: 768px) {
     .pesquisar { 
       margin-bottom: 25px; 
-      margin-left: 2%;
+      margin-left: 0%;
     }
 
     #app {

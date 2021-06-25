@@ -1,7 +1,9 @@
 <template>
     <nav>
         <input placeholder="Usuário" class="pesquisa" v-model="user">
-        <img src="../assets/lupa.png" class="btnPesquisar" @click="pegarNome">
+        <div class="containerLupa" @click="pegarNome">
+            <img src="../assets/lupa.png" class="imgPesquisar">
+        </div>
     </nav>
 </template>
 
@@ -29,7 +31,6 @@ export default {
         grid-template-columns: 350px 80px;
         grid-template-rows: 100%;
         margin-left: 15%;
-        width: 60px;
     }
 
     .pesquisa {
@@ -37,12 +38,16 @@ export default {
         height: 25px;
     }
 
-    .btnPesquisar {
-        padding: 0px;
-        margin: 0px;
-        grid-area: btnPesquisa;
-        background-color: black;
-        width: 30px;
+    .imgPesquisar {
+        width: 26px;
+        margin-top: 2px;
+        margin-left: 13px;
+    }
+
+    .containerLupa {
+        background-color: #000000;
+        width: 55px;
+        height: 31px;
     }
 
     @media(max-width: 768px) {
