@@ -24,7 +24,7 @@
                 <img src="../assets/followers.png">
                 {{ seguidores }}
             </span>
-        </div>    
+        </div>
     </aside>
 </template>
 

@@ -1,10 +1,12 @@
 <template>
     <main>
-        <div v-for="repo in dataRepo" class="repoContainer">
-            <h2>{{repo.name}}</h2>
-            <span class="descricao">{{repo.description}}</span>
-            <span class="repoEstrelas"><img src="../assets/estrela.png" class="imgEstrela"> {{repo.stargazers_count}}</span>
-        </div>
+        <transition-group>
+            <div v-for="(repo, i) in dataRepo" class="repoContainer" :key="i">
+                <h2>{{repo.name}}</h2>
+                <span class="descricao">{{repo.description}}</span>
+                <span class="repoEstrelas"><img src="../assets/estrela.png" class="imgEstrela"> {{repo.stargazers_count}}</span>
+            </div>
+        </transition-group>
     </main>
 </template>
 
@@ -13,7 +15,7 @@ export default {
     props: {
         // Dados dos repositórios via prop
         dataRepo: [Object, Array]
-    },
+    }
 }
 </script>
 
@@ -40,8 +42,12 @@ export default {
 
     @media(max-width: 768px) {
         .repoContainer {
-        width: 25%;
-        margin-left: 10px;
+            width: 25%;
+            margin-left: 10px;
+        }
     }
-    }
+
+    
+
+
 </style>

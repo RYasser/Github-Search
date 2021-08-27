@@ -1,4 +1,9 @@
 function decrescente(repositorios) {
+
+    if (!repositorios) {
+        return
+    }
+    
     const decrescente = []
     const idDecrescentes = []
     let cont = 0

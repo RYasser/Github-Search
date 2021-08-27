@@ -4,8 +4,17 @@
       <img src="./assets/logo.png" class="imgLogo">
     </div>
     <Pesquisa class="pesquisar" @mandarNome="user = $event"/>
-    <component class="perfil" :is="respostaDaPesquisa" v-bind="propsAtuais"/>
-    <component class="repos" :is="verificarRepositorio" :dataRepo="dataRepo"/>
+
+    <transition>
+      <Perfil class="perfil" :dataGit="dataGit" v-if="animar"/>
+    </transition>
+
+    <transition>
+      <Repositorios class="repos" v-if="animar" :dataRepo="dataRepo"/>
+    </transition>
+
+    <semPerfil v-if="!perfil"/>
+
   </div>
 </template>
 
@@ -30,27 +39,23 @@ export default {
       user: undefined,
       dataGit: '',
       respostaDaPesquisa: '',
-      dataRepo: {}
-    }
-  },
-  computed: {
-    // Verifica qual componente está sendo utilizado para passar a propriedade ou não
-    propsAtuais() {
-      return this.respostaDaPesquisa === 'Perfil'
-        ? { dataGit: this.dataGit }
-        : {}
-    },
-    verificarRepositorio() {
-      return this.respostaDaPesquisa === 'Perfil'? 'Repositorios' : ''
+      dataRepo: {},
+      animar: false,
+      perfil: false
     }
   },
   methods: {
     // Método para realizar a requisição dos repositórios e ser chamado após a req do usuário
     pegarRepositorio() {
+
       fetch(`${this.url}/${this.user}/repos`)
-      .then(res => res.json())
-      // Manda pro armazenamento de repositórios do usuário atual com a lógica de decrementação
-      .then(data => this.dataRepo = decrescente(data))
+        .then(res => res.json())
+        // Manda pro armazenamento de repositórios do usuário atual com a lógica de decrementação
+        .then(data => this.dataRepo = decrescente(data))
+        .catch(error => {
+          this.perfil = false
+          this.animar = false
+        })
     }
   },
   watch: {
@@ -61,14 +66,25 @@ export default {
         .then(data => {
           this.dataGit = data
           
-          // Verifica se o perfil foi encontrado para utilizar o componente de acordo com a respota
-          data.message === 'Not Found' ? 
-            this.respostaDaPesquisa = 'semPerfil' : this.respostaDaPesquisa = 'Perfil'
+          // Verifica se o perfil foi encontrado para utilizar o componente de acordo com a resposta
+          if (data.message === 'Not Found') {
+            this.perfil = false
+          } else {
+
+              this.perfil = true
+              this.animar = false
+
+              // Temporizador para o reset dar efeito da animação
+              setTimeout(() => {
+                this.animar = true
+
+              }, 300)
+            }
         })
         // Realiza a requisição dos repositórios do usuário encontrado
         .then(data => this.pegarRepositorio())
         // Em caso de erro, executa o componente usado em caso o perfil não é encontrado
-        .catch(error => this.respostaDaPesquisa = 'semPerfil')
+        .catch(error => this.perfil = false)
     }
   }
 }
@@ -135,6 +151,28 @@ export default {
     "pesquisa"
     "perfil"
     "repos";
+    }
   }
-}
+
+  @keyframes slide {
+    0% {
+          transform: translateX(-100px);
+       }
+  100% {
+        transform: translateX(0px);
+       }
+  }
+
+  .v-enter {
+    opacity: 0;
+  }
+
+  .v-enter-active {
+    transition: opacity 1s;
+    animation: slide 0.4s;
+  }
+
+  .v-enter-to {
+    opacity: 1;
+  }
 </style>
