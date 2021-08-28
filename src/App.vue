@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="layoutComPerfil layoutSemPerfil">
     <div class="titulo">
       <img src="./assets/logo.png" class="imgLogo">
     </div>
@@ -13,16 +13,16 @@
       <Repositorios class="repos" v-if="animar" :dataRepo="dataRepo"/>
     </transition>
 
-    <semPerfil v-if="!perfil"/>
+    <semPerfil class="semPerfil" v-if="!perfil" :primeiraRenderizacao="primeiraRenderizacao"/>
 
   </div>
 </template>
 
 <script>
-import Pesquisa from './components/pesquisa.vue'
-import Perfil from './components/perfil.vue'
+import Pesquisa from './components/Pesquisa.vue'
+import Perfil from './components/Perfil.vue'
 import semPerfil from './components/semPerfil.vue'
-import Repositorios from './components/repositorios.vue'
+import Repositorios from './components/Repositorios.vue'
 import { decrescente } from './funcionalidades/decrescente.js'
 
 export default {
@@ -41,8 +41,15 @@ export default {
       respostaDaPesquisa: '',
       dataRepo: {},
       animar: false,
-      perfil: false
+      perfil: false,
+      primeiraRenderizacao: false
     }
+  },
+  created() {
+    this.primeiraRenderizacao = true
+  },
+  updated() {
+    this.primeiraRenderizacao = false
   },
   methods: {
     // Método para realizar a requisição dos repositórios e ser chamado após a req do usuário
@@ -104,7 +111,8 @@ export default {
     width: 200px;
   }
 
-  #app {
+
+  .layoutComPerfil {
     margin-left: 10%;
     margin-top: 5%;
     display: grid;
@@ -115,6 +123,21 @@ export default {
     grid-template-areas: 
     "titulo pesquisa" 
     "perfil repos";
+  }
+
+  /* Responsável por ajustar o layout
+  quando não possuir um perfil ativo */
+  .layoutSemPerfil {
+    margin-left: 10%;
+    margin-top: 5%;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 20% 1fr;
+    grid-template-columns: 400px 1fr;
+    grid-template-areas: 
+    "titulo pesquisa" 
+    "semPerfil semPerfil";
   }
 
   .pesquisar {
@@ -133,6 +156,10 @@ export default {
     grid-area: titulo;
   }
 
+  .semPerfil {
+    grid-area: semPerfil;
+  }
+
   h2 {
     color: #000000;
   }
@@ -143,14 +170,23 @@ export default {
       margin-left: 0%;
     }
 
-    #app {
+    .comPerfil {
     grid-template-rows: 20% 1fr 1fr 1fr;
-    grid-template-columns: 100%;
+    grid-template-columns: 20%;
     grid-template-areas: 
     "titulo" 
     "pesquisa"
     "perfil"
     "repos";
+    }
+
+    .semPerfil {
+    grid-template-rows: 20% 1fr 1fr 1fr;
+    grid-template-columns: 20%;
+    grid-template-areas: 
+    "titulo" 
+    "pesquisa"
+    "semPerfil";
     }
   }
 
