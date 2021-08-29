@@ -6,14 +6,14 @@
     <Pesquisa class="pesquisar" @mandarNome="user = $event"/>
 
     <transition>
-      <Perfil class="perfil" :dataGit="dataGit" v-if="animar"/>
+      <Perfil class="perfil" :dataGit="dataGit" v-if="animar && perfil"/>
     </transition>
 
     <transition>
-      <Repositorios class="repos" v-if="animar" :dataRepo="dataRepo"/>
+      <Repositorios class="repos" :dataRepo="dataRepo" v-if="animar && perfil" />
     </transition>
-
-    <semPerfil class="semPerfil" v-if="!perfil" :primeiraRenderizacao="primeiraRenderizacao"/>
+    
+    <semPerfil class="semPerfil" :primeiraRenderizacao="primeiraRenderizacao" v-if="!perfil"/>
 
   </div>
 </template>
@@ -45,6 +45,8 @@ export default {
       primeiraRenderizacao: false
     }
   },
+  /* Responsável por identificar e renderizar no component semPerfil 
+  se o usuário informado é inválido ou é apenas a primeira render */
   created() {
     this.primeiraRenderizacao = true
   },
@@ -53,45 +55,49 @@ export default {
   },
   methods: {
     // Método para realizar a requisição dos repositórios e ser chamado após a req do usuário
-    pegarRepositorio() {
-
-      fetch(`${this.url}/${this.user}/repos`)
-        .then(res => res.json())
+    async pegarRepositorio() {
+        
+      try {
+        const response = await fetch(`${this.url}/${this.user}/repos`)
+        const data = await response.json()
         // Manda pro armazenamento de repositórios do usuário atual com a lógica de decrementação
-        .then(data => this.dataRepo = decrescente(data))
-        .catch(error => {
-          this.perfil = false
-          this.animar = false
-        })
+        this.dataRepo = decrescente(data)
+      } catch {
+        this.perfil = false
+        this.animar = false
+      }     
     }
   },
   watch: {
-    user: function() {
+    user: async function() {
       // Realiza a requisição de acordo com o usuário informado
-      fetch(`${this.url}/${this.user}`)
-        .then(res => res.json())
-        .then(data => {
-          this.dataGit = data
-          
-          // Verifica se o perfil foi encontrado para utilizar o componente de acordo com a resposta
-          if (data.message === 'Not Found') {
-            this.perfil = false
-          } else {
+      try {
+        const response = await fetch(`${this.url}/${this.user}`)
+        const data = await response.json()
 
-              this.perfil = true
-              this.animar = false
+        this.dataGit = data
+            
+        // Verifica se o perfil foi encontrado para utilizar o componente de acordo com a resposta
+        if (data.message === 'Not Found') {
+          this.perfil = false
+        } else {
 
-              // Temporizador para o reset dar efeito da animação
-              setTimeout(() => {
-                this.animar = true
+          this.perfil = true
+          this.animar = false
 
-              }, 300)
-            }
-        })
+          // Temporizador para o reset dar efeito da animação
+          setTimeout(() => {
+            this.animar = true
+
+          }, 300)
+        }
         // Realiza a requisição dos repositórios do usuário encontrado
-        .then(data => this.pegarRepositorio())
+        this.pegarRepositorio()
+      } catch {
         // Em caso de erro, executa o componente usado em caso o perfil não é encontrado
-        .catch(error => this.perfil = false)
+        this.perfil = false
+      }
+          
     }
   }
 }
@@ -113,7 +119,7 @@ export default {
 
 
   .layoutComPerfil {
-    margin-left: 10%;
+    margin-left: 15%;
     margin-top: 5%;
     display: grid;
     width: 100%;
@@ -128,7 +134,7 @@ export default {
   /* Responsável por ajustar o layout
   quando não possuir um perfil ativo */
   .layoutSemPerfil {
-    margin-left: 10%;
+    margin-left: 5%;
     margin-top: 5%;
     display: grid;
     width: 100%;

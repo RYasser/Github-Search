@@ -15,6 +15,9 @@ export default {
     props: {
         // Dados dos repositórios via prop
         dataRepo: [Object, Array]
+    },
+    destroyed() {
+        this.$el.classList.display = 'none'
     }
 }
 </script>
@@ -29,10 +32,10 @@ export default {
     }
 
     .repoContainer {
-        width: 57%;
+        width: 48%;
         display: flex;
         flex-direction: column;
-        margin-left: 50px;
+        margin-left: 20px;
         margin-bottom: 25px;
     }
 
@@ -46,8 +49,4 @@ export default {
             margin-left: 10px;
         }
     }
-
-    
-
-
 </style>
