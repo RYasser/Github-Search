@@ -33,7 +33,6 @@
 import Pesquisa from './components/Pesquisa.vue'
 import Usuario from './views/Usuario.vue'
 import semPerfil from './views/semPerfil.vue'
-import { decrescente } from './funcionalidades/decrescente.js'
 
 export default {
   name: 'App',
@@ -66,12 +65,23 @@ export default {
   methods: {
     // Método para realizar a requisição dos repositórios e ser chamado após a req do usuário
     async pegarRepositorio() {
-        
+      
       try {
         const response = await fetch(`${this.url}/${this.user}/repos`)
         const data = await response.json()
         // Manda pro armazenamento de repositórios do usuário atual com a lógica de decrementação
-        this.dataRepo = decrescente(data)
+
+        data.sort((data, data2) => {
+          if (data2.stargazers_count > data.stargazers_count) {
+            return 1
+          }
+          else if (data2.stargazers_count < data.stargazers_count) {
+            return -1
+          }
+          return 0
+        })
+
+        this.dataRepo = data
       } catch {
         this.perfil = false
         this.animar = false
